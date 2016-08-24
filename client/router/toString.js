@@ -48,12 +48,12 @@ export default function (options, cbk) {
           result.initial = JSON.stringify(store.getState());
         }
       } catch (e) {
-        result.error = e;
+        result.error = e.toString();
       }
       return cbk(JSON.stringify(result));
     });
   } catch (e) {
-    result.error = e;
+    result.error = e.toString();
     return cbk(JSON.stringify(result));
   }
 }
