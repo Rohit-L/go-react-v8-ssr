@@ -49,7 +49,10 @@ func (h *V8React) Execute(w http.ResponseWriter, r *http.Request, UUID *uuid.UUI
 	resp := Resp{UUID: UUID.String(), startTime: time.Now()}
 
 	ctx := <-h.get
+	// Update the console log bindings to prefix logs with the current request UUID.
 	v8console.Config{UUID.String() + "> ", os.Stdout, os.Stderr, true}.Inject(ctx)
+	// Update the fetch bindings to include the current request's cookies.
+	v8fetch.Inject(ctx, v8fetch.AddCookieHeader{h.local, r})
 	defer func() { h.ret <- ctx }()
 
 	renderParams, err := ctx.Create(map[string]interface{}{

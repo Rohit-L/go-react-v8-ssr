@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/GeertJohan/go.rice"
 	"github.com/augustoroman/sandwich"
@@ -51,6 +52,8 @@ func main() {
 	// Gzip all the things!  If you want to be more selective, then move this
 	// call to specific handlers below.
 	mw = sandwich.Gzip(mw)
+	// A fake authentication middleware.
+	mw = mw.With(DoAuth)
 
 	// Check out some random API endpoint:
 	http.Handle("/api/v1/conf", mw.With(ApiConf))
@@ -74,15 +77,35 @@ func NewUUID(e *sandwich.LogEntry) (*uuid.UUID, error) {
 	return u, err
 }
 
-func ApiConf(w http.ResponseWriter, r *http.Request) error {
+type User string
+
+func DoAuth(w http.ResponseWriter, r *http.Request, e *sandwich.LogEntry) User {
+	var u User
+	if login := r.FormValue("login"); login == "-" {
+		http.SetCookie(w, &http.Cookie{Name: "user", HttpOnly: true, MaxAge: 0, Expires: time.Now()})
+		u = "<none>"
+	} else if login != "" {
+		http.SetCookie(w, &http.Cookie{Name: "user", Value: login, HttpOnly: true})
+		u = User(login)
+	} else if c, err := r.Cookie("user"); err == nil && c.Value != "" {
+		u = User(c.Value)
+	} else {
+		u = "<none>"
+	}
+	e.Note["user"] = string(u)
+	return u
+}
+
+func ApiConf(w http.ResponseWriter, r *http.Request, u User) error {
 	config := struct {
 		Debug     bool   `json:"debug"`
 		Commit    string `json:"commit"`
 		Port      int    `json:"port"`
 		Title     string `json:"title"`
+		User      User   `json:"user"`
 		ApiPrefix string `json:"api.prefix"`
 		Path      string `json:"duktape.path"`
-	}{true, commitHash, 5000, "Go Starter Kit", "/api", "static/build/bundle.js"}
+	}{true, commitHash, 5000, "Go Starter Kit", u, "/api", "static/build/bundle.js"}
 	return json.NewEncoder(w).Encode(config)
 }
 
