@@ -1,38 +1,94 @@
 package main
 
 import (
-	"os"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
 
-	"github.com/codegangsta/cli"
+	"github.com/GeertJohan/go.rice"
+	"github.com/augustoroman/sandwich"
+	"github.com/nu7hatch/gouuid"
+)
+
+// Values for these are injected during the build process.
+var (
+	commitHash string
+	debug      bool
 )
 
 func main() {
-	Run(os.Args)
-}
+	addr := flag.String("addr", ":5000", "Address to serve on")
+	flag.Parse()
 
-// Run creates, configures and runs
-// main cli.App
-func Run(args []string) {
+	cfg := rice.Config{[]rice.LocateMethod{
+		rice.LocateWorkingDirectory,
+		rice.LocateFS,
+		rice.LocateAppended,
+		rice.LocateEmbedded,
+	}}
+	templateBox := must(cfg.FindBox("data/templates"))
+	staticBox := must(cfg.FindBox("data/static"))
 
-	app := cli.NewApp()
-	app.Name = "app"
-	app.Usage = "React server application"
-
-	app.Commands = []cli.Command{
-		{
-			Name:   "run",
-			Usage:  "Runs server",
-			Action: RunServer,
-		},
+	// Setup the react rendering handler
+	reactTpl := template.Must(template.New("react.html").Parse(
+		templateBox.MustString("react.html")))
+	jsBundle := staticBox.MustString("build/bundle.js")
+	react, err := NewV8React(jsBundle, reactTpl, http.DefaultServeMux)
+	if err != nil {
+		log.Fatal(err)
 	}
-	app.Run(args)
+
+	staticFiles := http.StripPrefix("/static", http.FileServer(staticBox.HTTPBox()))
+
+	// Don't use sandwich for favicon to reduce log spam.
+	http.Handle("/favicon.ico", http.NotFoundHandler())
+
+	// Now, setup the actual middleware handling & routing:
+	mw := sandwich.TheUsual()
+	// Gzip all the things!  If you want to be more selective, then move this
+	// call to specific handlers below.
+	mw = sandwich.Gzip(mw)
+
+	// Check out some random API endpoint:
+	http.Handle("/api/v1/conf", mw.With(ApiConf))
+
+	// Anything under /static/ goes here:
+	http.Handle("/static/", mw.With(staticFiles.ServeHTTP))
+
+	// All other requests will get handling by this:
+	http.Handle("/", mw.With(NewUUID, react.Execute, react.Render))
+	fmt.Println("Serving on ", *addr)
+	if err := http.ListenAndServe(*addr, nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
-// RunServer creates, configures and runs
-// main server.App
-func RunServer(c *cli.Context) {
-	app := NewApp(AppOptions{
-	// see server/app.go:150
-	})
-	app.Run()
+func NewUUID(e *sandwich.LogEntry) (*uuid.UUID, error) {
+	u, err := uuid.NewV4()
+	if err == nil {
+		e.Note["uuid"] = u.String()
+	}
+	return u, err
+}
+
+func ApiConf(w http.ResponseWriter, r *http.Request) error {
+	config := struct {
+		Debug     bool   `json:"debug"`
+		Commit    string `json:"commit"`
+		Port      int    `json:"port"`
+		Title     string `json:"title"`
+		ApiPrefix string `json:"api.prefix"`
+		Path      string `json:"duktape.path"`
+	}{true, commitHash, 5000, "Go Starter Kit", "/api", "static/build/bundle.js"}
+	return json.NewEncoder(w).Encode(config)
+}
+
+func must(b *rice.Box, err error) *rice.Box {
+	if err != nil {
+		panic(err)
+	}
+	return b
 }

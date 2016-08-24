@@ -2,8 +2,10 @@
 /bin
 /pkg
 /src
-/vendor
+/vendor/*
+!/vendor/vendor.json
 /server/bindata.go
+/server/rice-box.go
 /server/data/static/build
 
 .pid
