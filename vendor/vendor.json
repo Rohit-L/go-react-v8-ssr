@@ -15,19 +15,19 @@
 			"revisionTime": "2016-08-11T09:34:08Z"
 		},
 		{
-			"checksumSHA1": "lkgcfid6q64ooWuehTFCi2uw9D4=",
+			"checksumSHA1": "lJ7bZjFNQ5bBF2pp3SqM9PJUglw=",
 			"path": "github.com/augustoroman/sandwich",
-			"revision": "a5af306f8660de4b8dea9a39a6021aa090c1bf83",
-			"revisionTime": "2016-08-24T02:34:20Z"
+			"revision": "cd9bcf18bd001ded2a6a1751495b40856dee3752",
+			"revisionTime": "2016-08-25T08:34:05Z"
 		},
 		{
-			"checksumSHA1": "iHkS/S2wDlCfOCU/+M3Dgf7WGX0=",
+			"checksumSHA1": "gFwHw1jXodDMrIEfU7UQqmKrkHY=",
 			"path": "github.com/augustoroman/sandwich/chain",
-			"revision": "a5af306f8660de4b8dea9a39a6021aa090c1bf83",
-			"revisionTime": "2016-08-24T02:34:20Z"
+			"revision": "cd9bcf18bd001ded2a6a1751495b40856dee3752",
+			"revisionTime": "2016-08-25T08:34:05Z"
 		},
 		{
-			"checksumSHA1": "wZ3t/Le9lfXV3LVtMoDz8gs26r8=",
+			"checksumSHA1": "f9JEZfpfZEbnBoNi9NYnmxyU1s8=",
 			"path": "github.com/augustoroman/v8",
 			"revision": "5751caa353e36c07e9ff3c416ed895d02e003272",
 			"revisionTime": "2016-08-24T21:35:31Z"
@@ -35,8 +35,8 @@
 		{
 			"checksumSHA1": "UwvunCbrLk5dvN2qtotM29A06Z4=",
 			"path": "github.com/augustoroman/v8/v8console",
-			"revision": "151f22e1067c04664d6e7997624d18811408b4b6",
-			"revisionTime": "2016-08-24T18:04:02Z"
+			"revision": "5751caa353e36c07e9ff3c416ed895d02e003272",
+			"revisionTime": "2016-08-24T21:35:31Z"
 		},
 		{
 			"checksumSHA1": "2UIHFnNW6GtD3XjolfHQIhcbSq8=",
@@ -47,8 +47,8 @@
 		{
 			"checksumSHA1": "eeiNBo+Zej0PSas3vs2ezjWezuY=",
 			"path": "github.com/augustoroman/v8fetch/internal/data",
-			"revision": "781ec599fcfa5bbd5e83094c55f656e0a90d08ba",
-			"revisionTime": "2016-08-23T21:51:02Z"
+			"revision": "373f2a02daefcb0f5f6484085999237be6abe261",
+			"revisionTime": "2016-08-24T22:33:18Z"
 		},
 		{
 			"checksumSHA1": "8i+beEgcVf0q/I7lTqo2ERZM/OU=",
