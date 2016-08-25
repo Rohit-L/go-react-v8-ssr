@@ -43,7 +43,9 @@ $ npm install
 See instructions at https://github.com/augustoroman/v8
 
 #### Add v8 symlinks
-vendor/github.com/augustoroman/v8/symlink.sh <V8-DIR>
+```bash
+$ vendor/github.com/augustoroman/v8/symlink.sh <V8-DIR>
+```
 
 ## Run development
 
