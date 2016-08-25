@@ -39,7 +39,6 @@ class Usage extends Component {
       <a className={link} href='?login=alice'>Login as alice</a> &nbsp;|&nbsp;
       <a className={link} href='?login=bob'>Login as bob</a> &nbsp;|&nbsp;
       <a className={link} href='?login=-'>Logout</a> <br/>
-      (then refresh)
     </div>;
   }
 

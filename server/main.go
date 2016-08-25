@@ -21,6 +21,8 @@ var (
 )
 
 func main() {
+	log.SetFlags(log.Lshortfile | log.Ltime | log.Lmicroseconds)
+
 	addr := flag.String("addr", ":5000", "Address to serve on")
 	flag.Parse()
 
@@ -82,18 +84,44 @@ type User string
 func DoAuth(w http.ResponseWriter, r *http.Request, e *sandwich.LogEntry) User {
 	var u User
 	if login := r.FormValue("login"); login == "-" {
-		http.SetCookie(w, &http.Cookie{Name: "user", HttpOnly: true, MaxAge: 0, Expires: time.Now()})
+		deleteCookie(w, r, "user")
 		u = "<none>"
 	} else if login != "" {
-		http.SetCookie(w, &http.Cookie{Name: "user", Value: login, HttpOnly: true})
+		replaceCookie(w, r, &http.Cookie{
+			Name: "user", Value: login, HttpOnly: true})
 		u = User(login)
 	} else if c, err := r.Cookie("user"); err == nil && c.Value != "" {
 		u = User(c.Value)
 	} else {
+		deleteCookie(w, r, "user")
 		u = "<none>"
 	}
 	e.Note["user"] = string(u)
 	return u
+}
+
+// deleteCookie removes a cookie from the client (via setting an expired cookie
+// in the response headers) and the local request (by re-encoding all the
+// cookies without the offending one).
+func deleteCookie(w http.ResponseWriter, r *http.Request, name string) {
+	replaceCookie(w, r, &http.Cookie{Name: name, HttpOnly: true, MaxAge: -1, Expires: time.Now()})
+}
+
+// Replace cookie will set the specified cookie both into the response but also
+// in the current request, modifying the headers.  This is necessary for
+// correct server-side rendering since we might alter the cookie (e.g. during
+// login) and then use the current request's headers to do the page rendering,
+// and we want the page rendering to have the correct cookies.
+func replaceCookie(w http.ResponseWriter, r *http.Request, c *http.Cookie) {
+	cookies := r.Cookies()      // Extract existing cookies
+	r.Header.Del("Cookie")      // Delete all cookies
+	r.AddCookie(c)              // Add the new cookie first
+	for _, e := range cookies { // Add back all other cookies
+		if e.Name != c.Name {
+			r.AddCookie(e)
+		}
+	}
+	http.SetCookie(w, c) // Also set cookie on response
 }
 
 func ApiConf(w http.ResponseWriter, r *http.Request, u User) error {
