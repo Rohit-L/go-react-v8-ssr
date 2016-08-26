@@ -1,7 +1,7 @@
 TARGET        = bin/server
 BUNDLE        = server/data/static/build/bundle.js
 NODE_BIN      = $(shell npm bin)
-GO_FILES      = $(shell find ./server -type f -name "*.go")
+GO_FILES      = $(shell find ./server -type f -name "*.go" -depth 1)
 APP_FILES     = $(shell find client -type f)
 GIT_HASH      = $(shell git rev-parse HEAD)
 LDFLAGS       = -w -X main.commitHash=$(GIT_HASH)

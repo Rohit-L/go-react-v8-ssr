@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/augustoroman/go-react-v8-ssr/server/jsrenderer"
+
 	"github.com/GeertJohan/go.rice"
 	"github.com/augustoroman/sandwich"
 	"github.com/nu7hatch/gouuid"
@@ -39,10 +41,14 @@ func main() {
 	reactTpl := template.Must(template.New("react.html").Parse(
 		templateBox.MustString("react.html")))
 	jsBundle := staticBox.MustString("build/bundle.js")
-	react, err := NewV8React(jsBundle, reactTpl, http.DefaultServeMux)
-	if err != nil {
-		log.Fatal(err)
-	}
+	renderer := &jsrenderer.Pool{New: func() jsrenderer.Renderer {
+		r, err := jsrenderer.NewV8(jsBundle, http.DefaultServeMux)
+		if err != nil {
+			panic(err)
+		}
+		return r
+	}}
+	react := ReactPage{renderer, reactTpl}
 
 	staticFiles := http.StripPrefix("/static", http.FileServer(staticBox.HTTPBox()))
 
@@ -64,7 +70,7 @@ func main() {
 	http.Handle("/static/", mw.With(staticFiles.ServeHTTP))
 
 	// All other requests will get handling by this:
-	http.Handle("/", mw.With(NewUUID, react.Execute, react.Render))
+	http.Handle("/", mw.With(NewUUID, react.Render))
 	fmt.Println("Serving on ", *addr)
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal(err)
