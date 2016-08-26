@@ -9,9 +9,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/augustoroman/go-react-v8-ssr/server/jsrenderer"
-
 	"github.com/GeertJohan/go.rice"
+	"github.com/augustoroman/go-react-v8-ssr/server/jsrenderer"
 	"github.com/augustoroman/sandwich"
 	"github.com/nu7hatch/gouuid"
 )
@@ -42,11 +41,8 @@ func main() {
 		templateBox.MustString("react.html")))
 	jsBundle := staticBox.MustString("build/bundle.js")
 	renderer := &jsrenderer.Pool{New: func() jsrenderer.Renderer {
-		r, err := jsrenderer.NewV8(jsBundle, http.DefaultServeMux)
-		if err != nil {
-			panic(err)
-		}
-		return r
+		// Duktape on windows, V8 otherwise.  Panics on initialization error.
+		return jsrenderer.NewDefaultOrDie(jsBundle, http.DefaultServeMux)
 	}}
 	react := ReactPage{renderer, reactTpl}
 

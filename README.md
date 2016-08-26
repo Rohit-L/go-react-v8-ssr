@@ -7,7 +7,8 @@ Go server serving a react-based website using server-side rendering powered by V
 This repo is forked from the awesome [go-starter-kit](https://github.com/olebedev/go-starter-kit).
 
 I forked that project and am modifying to get a better understanding of how it works.  And use some of the tools I'm more familiar with.  There are many changes, but some of the major ones include:
-* rework the JS engine to use [v8](https://github.com/augustoroman/v8) instead of [duktape](https://github.com/olebedev/go-duktape)
+* rework the JS rendering engine to use either [v8](https://github.com/augustoroman/v8) or [duktape](https://github.com/olebedev/go-duktape)
+  On windows, only duktape is allowed and used by default.
 * simplify the server code to be an easier-to-understand example
 * use [modd](https://github.com/cortesi/modd) instead of [on](https://github.com/olebedev/on) for running the server.
 * use [go-rice](https://github.com/GeertJohan/go.rice) instead of [go-bindata](https://github.com/jteeuwen/go-bindata) for embedding the data.
@@ -17,7 +18,8 @@ I forked that project and am modifying to get a better understanding of how it w
 
 Make sure you have:
 * [golang](https://golang.org/)
-* [node.js](https://nodejs.org/) with [npm](https://www.npmjs.com/), only to build the application bundle at compile time
+* [node.js](https://nodejs.org/) with [npm](https://www.npmjs.com/), only to build the application bundle at compile time.
+  For windows, it's very important that you have a recent npm, otherwise the npm install will fail because the directory paths are too long.
 * [GNU make](https://www.gnu.org/software/make/)
 
 #### Clone the repo
@@ -30,7 +32,7 @@ $ cd $GOPATH/src/github.com/<username>/<project>
 ```bash
 $ go get -u github.com/kardianos/govendor
 $ go get -u github.com/GeertJohan/go.rice/rice
-$ go get -u https://github.com/cortesi/modd
+$ go get -u github.com/cortesi/modd
 ```
 
 #### Install dependencies:

@@ -20,7 +20,8 @@ var createdCount int32
 
 func NewV8(jsCode string, local http.Handler) (Renderer, error) {
 	ctx := v8.NewIsolate().NewContext()
-	v8fetch.Inject(ctx, local)
+	ah := &addHeaders{Server: local}
+	v8fetch.Inject(ctx, ah)
 	num := atomic.AddInt32(&createdCount, 1)
 	v8console.Config{fmt.Sprintf("Context #%d> ", num), os.Stdout, os.Stderr, true}.Inject(ctx)
 	_, err := ctx.Eval(jsCode, "bundle.js")
@@ -28,24 +29,19 @@ func NewV8(jsCode string, local http.Handler) (Renderer, error) {
 		return nil, fmt.Errorf("Cannot initialize context from bundle code: %v", err)
 	}
 	ctx.Eval("console.info('Initialized new context')", "<server>")
-	return v8Renderer{ctx, local}, nil
+	return v8Renderer{ctx, ah}, nil
 }
 
 type v8Renderer struct {
 	ctx   *v8.Context
-	local http.Handler
-}
-
-type resAndError struct {
-	Result
-	error
+	local *addHeaders
 }
 
 func (r v8Renderer) Render(p Params) (Result, error) {
 	// Update the console log bindings to prefix logs with the current request UUID.
 	v8console.Config{p.UUID + "> ", os.Stdout, os.Stderr, true}.Inject(r.ctx)
-	// Update the fetch bindings to include the current request's cookies.
-	v8fetch.Inject(r.ctx, v8fetch.AddHeaders{r.local, p.Headers})
+	// Update the local server to include the current request's cookies.
+	r.local.Headers = p.Headers
 
 	params, err := r.ctx.Create(p)
 	if err != nil {

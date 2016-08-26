@@ -11,23 +11,6 @@ import (
 	"gopkg.in/olebedev/go-duktape.v2"
 )
 
-// addHeaders wraps Server and adds all of the provided headers to any
-// request processed by it.  This can be used to copy cookies from a client
-// request to all fetch calls during server-side rendering.
-type addHeaders struct {
-	Server  http.Handler
-	Headers http.Header
-}
-
-func (a addHeaders) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	for key, vals := range a.Headers {
-		for _, val := range vals {
-			r.Header.Add(key, val)
-		}
-	}
-	a.Server.ServeHTTP(w, r)
-}
-
 func NewDukTape(jsCode string, local http.Handler) (Renderer, error) {
 	ctx := duktape.New()
 	ctx.PevalString(`var console = {log:print,warn:print,error:print,info:print}`)
