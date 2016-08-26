@@ -39,10 +39,7 @@ func (d duktapeRenderer) Render(p Params) (Result, error) {
 
 	ch := make(chan resAndError, 1)
 	d.ctx.PushGlobalGoFunction("__goServerCallback__", func(ctx *duktape.Context) int {
-		jsonResult := ctx.SafeToString(-1)
-		var res resAndError
-		res.error = json.Unmarshal([]byte(jsonResult), &res.Result)
-		ch <- res
+		ch <- parseJsonFromCallback(ctx.SafeToString(-1), nil)
 		return 0
 	})
 

@@ -3,7 +3,6 @@
 package jsrenderer
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -76,15 +75,5 @@ func (v *v8Renderer) resultCallback(args []*v8.Value) resAndError {
 	if len(args) < 1 {
 		return resAndError{error: errors.New("No result returned from rendering engine.")}
 	}
-	jsonVal := args[0].String()
-	var res struct {
-		Error string `json:"error"`
-		Result
-	}
-	if err := json.Unmarshal([]byte(jsonVal), &res); err != nil {
-		return resAndError{res.Result, err}
-	} else if res.Error != "" {
-		return resAndError{res.Result, errors.New(res.Error)}
-	}
-	return resAndError{res.Result, nil}
+	return parseJsonFromCallback(args[0].String(), nil)
 }
