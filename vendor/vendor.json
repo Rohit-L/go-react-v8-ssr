@@ -39,16 +39,16 @@
 			"revisionTime": "2016-08-24T21:35:31Z"
 		},
 		{
-			"checksumSHA1": "2UIHFnNW6GtD3XjolfHQIhcbSq8=",
+			"checksumSHA1": "/HQB/wzsgYb1NUEaX+d5zINiAFA=",
 			"path": "github.com/augustoroman/v8fetch",
-			"revision": "373f2a02daefcb0f5f6484085999237be6abe261",
-			"revisionTime": "2016-08-24T22:33:18Z"
+			"revision": "a1e78cb838026a41fe3e8c983c4da638a1ba4160",
+			"revisionTime": "2016-08-26T08:58:05Z"
 		},
 		{
 			"checksumSHA1": "eeiNBo+Zej0PSas3vs2ezjWezuY=",
 			"path": "github.com/augustoroman/v8fetch/internal/data",
-			"revision": "373f2a02daefcb0f5f6484085999237be6abe261",
-			"revisionTime": "2016-08-24T22:33:18Z"
+			"revision": "a1e78cb838026a41fe3e8c983c4da638a1ba4160",
+			"revisionTime": "2016-08-26T08:58:05Z"
 		},
 		{
 			"checksumSHA1": "8i+beEgcVf0q/I7lTqo2ERZM/OU=",
@@ -63,10 +63,40 @@
 			"revisionTime": "2016-08-11T00:15:26Z"
 		},
 		{
+			"checksumSHA1": "O7lIX71vTepwRVcnXbV3Fzq0z5U=",
+			"path": "github.com/moul/http2curl",
+			"revision": "b1479103caacaa39319f75e7f57fc545287fca0d",
+			"revisionTime": "2016-05-20T21:31:28Z"
+		},
+		{
 			"checksumSHA1": "gcLub3oB+u4QrOJZcYmk/y2AP4k=",
 			"path": "github.com/nu7hatch/gouuid",
 			"revision": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3",
 			"revisionTime": "2013-12-21T20:05:32Z"
+		},
+		{
+			"checksumSHA1": "32CeEfELP6teo0LoJeqdWN9smLs=",
+			"path": "github.com/parnurzeal/gorequest",
+			"revision": "aa4ecb7ff5d4538cfb9878346864be60ec237052",
+			"revisionTime": "2016-08-20T11:52:03Z"
+		},
+		{
+			"checksumSHA1": "6thYfOqbpn607QljSl+jOXbuqio=",
+			"path": "golang.org/x/net/publicsuffix",
+			"revision": "7394c112eae4dba7e96bfcfe738e6373d61772b4",
+			"revisionTime": "2016-08-19T20:57:39Z"
+		},
+		{
+			"checksumSHA1": "sKHFPwLKWnaLi38REvlx/2IYzNI=",
+			"path": "gopkg.in/olebedev/go-duktape-fetch.v2",
+			"revision": "a4ba37699f8bae499586df39f367460ab7566f1b",
+			"revisionTime": "2016-04-18T10:53:35Z"
+		},
+		{
+			"checksumSHA1": "+IcBxYZj5xqiRqbuSy9I51L1zc0=",
+			"path": "gopkg.in/olebedev/go-duktape.v2",
+			"revision": "c8eb77ef5aa5bff7b04fa1b8e70a5a1e5eb0755a",
+			"revisionTime": "2016-08-24T01:59:21Z"
 		}
 	],
 	"rootPath": "github.com/augustoroman/go-react-v8-ssr"
