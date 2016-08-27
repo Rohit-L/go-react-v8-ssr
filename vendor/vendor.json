@@ -39,16 +39,16 @@
 			"revisionTime": "2016-08-27T03:22:54Z"
 		},
 		{
-			"checksumSHA1": "5/oFB+sr8+1q1byLMPtaF0Pb+I4=",
+			"checksumSHA1": "SJiHu8FSO2WKqOlQHQZX6sj+jy0=",
 			"path": "github.com/augustoroman/v8fetch",
-			"revision": "b186f3964acdec1863a44cdd690043b7bafe37d7",
-			"revisionTime": "2016-08-27T03:54:42Z"
+			"revision": "a1247688a822b98882e9ed3ab47c1d74a6a5a498",
+			"revisionTime": "2016-08-27T05:57:28Z"
 		},
 		{
 			"checksumSHA1": "eeiNBo+Zej0PSas3vs2ezjWezuY=",
 			"path": "github.com/augustoroman/v8fetch/internal/data",
-			"revision": "b186f3964acdec1863a44cdd690043b7bafe37d7",
-			"revisionTime": "2016-08-27T03:54:42Z"
+			"revision": "a1247688a822b98882e9ed3ab47c1d74a6a5a498",
+			"revisionTime": "2016-08-27T05:57:28Z"
 		},
 		{
 			"checksumSHA1": "8i+beEgcVf0q/I7lTqo2ERZM/OU=",
