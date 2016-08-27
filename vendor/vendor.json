@@ -15,40 +15,40 @@
 			"revisionTime": "2016-08-11T09:34:08Z"
 		},
 		{
-			"checksumSHA1": "lJ7bZjFNQ5bBF2pp3SqM9PJUglw=",
+			"checksumSHA1": "8Cj/rdKxl5vEdhfHouZdGXFRKjY=",
 			"path": "github.com/augustoroman/sandwich",
-			"revision": "cd9bcf18bd001ded2a6a1751495b40856dee3752",
-			"revisionTime": "2016-08-25T08:34:05Z"
+			"revision": "d8657ec39ab8b95bcb89de6df8d9f197d58a341c",
+			"revisionTime": "2016-08-27T00:27:47Z"
 		},
 		{
-			"checksumSHA1": "gFwHw1jXodDMrIEfU7UQqmKrkHY=",
+			"checksumSHA1": "+OZDFX0VPeKBWNQ7haiMVBTxhc4=",
 			"path": "github.com/augustoroman/sandwich/chain",
-			"revision": "cd9bcf18bd001ded2a6a1751495b40856dee3752",
-			"revisionTime": "2016-08-25T08:34:05Z"
+			"revision": "d8657ec39ab8b95bcb89de6df8d9f197d58a341c",
+			"revisionTime": "2016-08-27T00:27:47Z"
 		},
 		{
-			"checksumSHA1": "f9JEZfpfZEbnBoNi9NYnmxyU1s8=",
+			"checksumSHA1": "nTK5uoTTH3Zi4CNsAeNApMYY6K4=",
 			"path": "github.com/augustoroman/v8",
-			"revision": "5751caa353e36c07e9ff3c416ed895d02e003272",
-			"revisionTime": "2016-08-24T21:35:31Z"
+			"revision": "d5aaaec6245e71ff4ffb0f68d25b64203100b96e",
+			"revisionTime": "2016-08-27T03:22:54Z"
 		},
 		{
-			"checksumSHA1": "UwvunCbrLk5dvN2qtotM29A06Z4=",
+			"checksumSHA1": "b9AFO0WnxQH/uqUoK09BHx6+BQs=",
 			"path": "github.com/augustoroman/v8/v8console",
-			"revision": "5751caa353e36c07e9ff3c416ed895d02e003272",
-			"revisionTime": "2016-08-24T21:35:31Z"
+			"revision": "d5aaaec6245e71ff4ffb0f68d25b64203100b96e",
+			"revisionTime": "2016-08-27T03:22:54Z"
 		},
 		{
-			"checksumSHA1": "/HQB/wzsgYb1NUEaX+d5zINiAFA=",
+			"checksumSHA1": "5/oFB+sr8+1q1byLMPtaF0Pb+I4=",
 			"path": "github.com/augustoroman/v8fetch",
-			"revision": "a1e78cb838026a41fe3e8c983c4da638a1ba4160",
-			"revisionTime": "2016-08-26T08:58:05Z"
+			"revision": "b186f3964acdec1863a44cdd690043b7bafe37d7",
+			"revisionTime": "2016-08-27T03:54:42Z"
 		},
 		{
 			"checksumSHA1": "eeiNBo+Zej0PSas3vs2ezjWezuY=",
 			"path": "github.com/augustoroman/v8fetch/internal/data",
-			"revision": "a1e78cb838026a41fe3e8c983c4da638a1ba4160",
-			"revisionTime": "2016-08-26T08:58:05Z"
+			"revision": "b186f3964acdec1863a44cdd690043b7bafe37d7",
+			"revisionTime": "2016-08-27T03:54:42Z"
 		},
 		{
 			"checksumSHA1": "8i+beEgcVf0q/I7lTqo2ERZM/OU=",

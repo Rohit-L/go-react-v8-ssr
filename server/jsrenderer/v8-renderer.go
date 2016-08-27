@@ -48,8 +48,8 @@ func (r v8Renderer) Render(p Params) (Result, error) {
 	}
 
 	res := make(chan resAndError, 1)
-	callback := r.ctx.Bind("rendered_result", func(l v8.Loc, args ...*v8.Value) (*v8.Value, error) {
-		res <- r.resultCallback(args)
+	callback := r.ctx.Bind("rendered_result", func(in v8.CallbackArgs) (*v8.Value, error) {
+		res <- parseJsonFromCallback(in.Arg(0).String(), nil)
 		return nil, nil
 	})
 
@@ -69,11 +69,4 @@ func (r v8Renderer) Render(p Params) (Result, error) {
 		r.ctx.Terminate() // TODO(aroman): re-initialize ctx
 		return Result{}, errors.New("Timed out")
 	}
-}
-
-func (v *v8Renderer) resultCallback(args []*v8.Value) resAndError {
-	if len(args) < 1 {
-		return resAndError{error: errors.New("No result returned from rendering engine.")}
-	}
-	return parseJsonFromCallback(args[0].String(), nil)
 }
