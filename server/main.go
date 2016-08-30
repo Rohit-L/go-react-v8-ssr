@@ -27,16 +27,13 @@ func main() {
 	addr := flag.String("addr", ":5000", "Address to serve on")
 	flag.Parse()
 
-	cfg := rice.Config{[]rice.LocateMethod{
-		rice.LocateWorkingDirectory,
-		rice.LocateFS,
-		rice.LocateAppended,
-		rice.LocateEmbedded,
-	}}
-	templateBox := must(cfg.FindBox("data/templates"))
-	staticBox := must(cfg.FindBox("data/static"))
+	// Get our static data.  Typically this will be embedded into the binary,
+	// though it depends on how rice is initialize in the build script.
+	// With the current Makefile, it's compiled into the binary.
+	templateBox := rice.MustFindBox("data/templates")
+	staticBox := rice.MustFindBox("data/static")
 
-	// Setup the react rendering handler
+	// Setup the react rendering handler:
 	reactTpl := template.Must(template.New("react.html").Parse(
 		templateBox.MustString("react.html")))
 	jsBundle := staticBox.MustString("build/bundle.js")

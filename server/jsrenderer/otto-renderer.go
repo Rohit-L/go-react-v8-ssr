@@ -11,6 +11,8 @@ import (
 	"github.com/robertkrimen/otto"
 )
 
+// NewOtto constructs a Renderer backed by the otto pure-go javascript engine.
+//
 // The otto renderer is included for comparison, but it dies when trying to
 // render react cause of there are regular expressions that use look-ahead which
 // isn't supported by re2 that otto uses.
@@ -27,7 +29,6 @@ import (
 // Also, there's not yet a fetch implementation for otto that I'm aware of.  It
 // should be easy to do, however since the rest isn't working I haven't done it
 // yet.
-
 func NewOtto(jsCode string, local http.Handler) (Renderer, error) {
 	ctx := otto.New()
 	_, err := ctx.Run(jsCode)
